@@ -1,7 +1,7 @@
 {
   "name": "@kazimirchuk/react-iphone",
   "author": "Oleksandr Kazimirchuk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "scripts": {
     "rollup": "rollup -c"
