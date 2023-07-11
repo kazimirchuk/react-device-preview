@@ -1,15 +1,15 @@
 import React from "react";
 
-interface iPhoneProps {
+interface AppleIPhoneProps {
     colorMode: "light" | "dark";
 }
 
 const IPHONE_HEIGHT = 5.81; // inches
 const IPHONE_WIDTH = 2.81; // inches
 
-const iPhone: React.FC<iPhoneProps> = ({
+const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     colorMode
-}: iPhoneProps) => {
+}) => {
     return (
         <div
             style={{
@@ -26,4 +26,4 @@ const iPhone: React.FC<iPhoneProps> = ({
     )
 }
 
-export default iPhone;
+export default AppleIPhone;
