@@ -1,10 +1,13 @@
 {
-  "name": "react-iphone",
+  "name": "@kazimirchuk/react-iphone",
   "author": "Oleksandr Kazimirchuk",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "rollup": "rollup -c"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/kazimirchuk"
   },
   "dependencies": {
     "@rollup/plugin-commonjs": "^25.0.2",
