@@ -1,1 +1,1 @@
-export { default } from "./iPhone";
+export { default } from "./AppleIPhone";
