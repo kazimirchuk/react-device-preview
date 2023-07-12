@@ -126,7 +126,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                     width: "100%",
                     height: "100%",
                     borderRadius: `${cornerRadius}rem`,
-                    backgroundColor: colorMode === "light" ? "black" : "#444444",
+                    backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
                     display: "flex"
                 }}
             >
@@ -157,7 +157,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                             height: "1rem",
                             borderRadius: 99999,
                             width: "30%",
-                            backgroundColor: colorMode === "light" ? "black" : "#444444",
+                            backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
                         }}
                     />
                 </div>
