@@ -4,4 +4,4 @@ export {
     Size,
     DeviceDimensions,
     Message,
-} from "./AppleIPhone";
+} from "./device";

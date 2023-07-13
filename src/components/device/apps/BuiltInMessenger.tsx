@@ -1,10 +1,10 @@
 import React from "react";
-import { Message } from "../AppleIPhone";
+import { Message, Size } from "../AppleIPhone";
 
 interface BuiltInMessengerProps {
     colorMode?: "light" | "dark";
     messageHistory: Message[];
-    size: "xs" | "sm" | "md" | "lg" | "xl";
+    size: Size;
 }
 
 const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
@@ -20,7 +20,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
     let messageBorderRadius = 1;
 
     switch (size) {
-        case "xs":
+        case Size.XS:
             messagesGap = messagesGap / 2;
             fontSize = fontSize / 2;
             messageMaxHeight = messageMaxHeight / 2;
@@ -28,7 +28,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             messagePaddingY = messagePaddingY / 2;
             messageBorderRadius = messageBorderRadius / 2;
             break;
-        case "sm":
+        case Size.SM:
             messagesGap = messagesGap * 0.75;
             fontSize = fontSize * 0.75;
             messageMaxHeight = messageMaxHeight * 0.75;
@@ -36,7 +36,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             messagePaddingY = messagePaddingY * 0.75;
             messageBorderRadius = messageBorderRadius * 0.75;
             break;
-        case "md":
+        case Size.MD:
             messagesGap = messagesGap;
             fontSize = fontSize;
             messageMaxHeight = messageMaxHeight;
@@ -44,7 +44,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             messagePaddingY = messagePaddingY;
             messageBorderRadius = messageBorderRadius;
             break;
-        case "lg":
+        case Size.LG:
             messagesGap = messagesGap * 1.75;
             fontSize = fontSize * 1.75;
             messageMaxHeight = messageMaxHeight * 1.75;
@@ -52,7 +52,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             messagePaddingY = messagePaddingY * 1.75;
             messageBorderRadius = messageBorderRadius * 1.75;
             break;
-        case "xl":
+        case Size.XL:
             messagesGap = messagesGap * 3;
             fontSize = fontSize * 3;
             messageMaxHeight = messageMaxHeight * 3;

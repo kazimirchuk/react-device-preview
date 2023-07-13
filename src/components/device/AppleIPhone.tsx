@@ -16,7 +16,7 @@ export enum Size {
 
 export interface AppleIPhoneProps {
     colorMode?: "light" | "dark";
-    size?: Size;
+    size?: "xs" | "sm" | "md" | "lg" | "xl";
     mode?: "portrait" | "landscape";
     messageHistory?: Message[];
     app?: "messenger";
@@ -111,7 +111,7 @@ const getDimensionsBySize = (
 
 const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     colorMode = "light",
-    size = Size.MD,
+    size = "md",
     mode = "portrait",
     app,
     messageHistory = [],
@@ -123,7 +123,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
         outerPadding: defaultOuterPadding,
         innerPadding: defaultInnerPadding,
         innerBorderRadius: defaultInnerBorderRadius,
-    } = getDimensionsBySize(size, mode);
+    } = getDimensionsBySize(size as Size, mode);
 
     const height = defaultHeight;
     const width = defaultWidth;
@@ -171,7 +171,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                         <BuiltInMessenger
                             colorMode={colorMode}
                             messageHistory={messageHistory}
-                            size={size}
+                            size={size as Size}
                         />
                     )}
                     <div
@@ -179,9 +179,9 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                             marginTop: `${innerPadding}rem`,
                             position: "absolute",
                             left: "35%",
-                            height: `${innerPadding * 2}rem`,
+                            height: mode === "portrait" ? `${innerPadding * 2}rem` : "30%",
                             borderRadius: 99999,
-                            width: "30%",
+                            width: mode === "portrait" ? "30%" : `${innerPadding * 2}rem`,
                             backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
                         }}
                     />
