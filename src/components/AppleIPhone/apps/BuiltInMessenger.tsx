@@ -4,12 +4,66 @@ import { Message } from "../AppleIPhone";
 interface BuiltInMessengerProps {
     colorMode?: "light" | "dark";
     messageHistory: Message[];
+    size: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
     colorMode = "light",
     messageHistory,
+    size,
 }) => {
+    let messagesGap = 0.5;
+    let fontSize = 0.8;
+    let messageMaxHeight = 5;
+    let messagePaddingX = 0.25;
+    let messagePaddingY = 0.5;
+    let messageBorderRadius = 1;
+
+    switch (size) {
+        case "xs":
+            messagesGap = messagesGap / 2;
+            fontSize = fontSize / 2;
+            messageMaxHeight = messageMaxHeight / 2;
+            messagePaddingX = messagePaddingX / 2;
+            messagePaddingY = messagePaddingY / 2;
+            messageBorderRadius = messageBorderRadius / 2;
+            break;
+        case "sm":
+            messagesGap = messagesGap * 0.75;
+            fontSize = fontSize * 0.75;
+            messageMaxHeight = messageMaxHeight * 0.75;
+            messagePaddingX = messagePaddingX * 0.75;
+            messagePaddingY = messagePaddingY * 0.75;
+            messageBorderRadius = messageBorderRadius * 0.75;
+            break;
+        case "md":
+            messagesGap = messagesGap;
+            fontSize = fontSize;
+            messageMaxHeight = messageMaxHeight;
+            messagePaddingX = messagePaddingX;
+            messagePaddingY = messagePaddingY;
+            messageBorderRadius = messageBorderRadius;
+            break;
+        case "lg":
+            messagesGap = messagesGap * 1.75;
+            fontSize = fontSize * 1.75;
+            messageMaxHeight = messageMaxHeight * 1.75;
+            messagePaddingX = messagePaddingX * 1.75;
+            messagePaddingY = messagePaddingY * 1.75;
+            messageBorderRadius = messageBorderRadius * 1.75;
+            break;
+        case "xl":
+            messagesGap = messagesGap * 3;
+            fontSize = fontSize * 3;
+            messageMaxHeight = messageMaxHeight * 3;
+            messagePaddingX = messagePaddingY * 3;
+            messagePaddingY = messagePaddingY * 3;
+            messageBorderRadius = messageBorderRadius * 3;
+            break;
+        default:
+            break;
+    }
+
     return (
         <>
             <div
@@ -26,7 +80,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                     padding: "1rem",
                     display: "flex",
                     flexDirection: "column-reverse",
-                    gap: "0.5rem",
+                    gap: `${messagesGap}rem`,
                 }}
             >
                 {messageHistory.map((message, index) => (
@@ -45,11 +99,14 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                     ? "#007aff"
                                     : "#e5e5ea",
                                 color: message.isOutgoing ? "#fff" : "#000",
-                                borderRadius: "1rem",
-                                padding: "0.25rem 0.5rem",
+                                borderRadius: `${messageBorderRadius}rem`,
+                                paddingLeft: `${messagePaddingX}rem`,
+                                paddingRight: `${messagePaddingX}rem`,
+                                paddingTop: `${messagePaddingY}rem`,
+                                paddingBottom: `${messagePaddingY}rem`,
                                 maxWidth: "75%",
-                                fontSize: "0.8rem",
-                                maxHeight: "5rem",
+                                fontSize: `${fontSize}rem`,
+                                maxHeight: `${messageMaxHeight}rem`,
                                 overflowY: "auto",
                             }}
                         >

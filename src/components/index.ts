@@ -1,1 +1,7 @@
-export { default as AppleIPhone } from "./AppleIPhone";
+export {
+    default as AppleIPhone,
+    AppleIPhoneProps,
+    Size,
+    DeviceDimensions,
+    Message,
+} from "./AppleIPhone";

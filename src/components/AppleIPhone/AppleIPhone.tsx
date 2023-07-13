@@ -5,34 +5,58 @@ export interface Message {
     isOutgoing: boolean;
     text: string;
 }
-interface AppleIPhoneProps {
+
+export enum Size {
+    XS = "xs",
+    SM = "sm",
+    MD = "md",
+    LG = "lg",
+    XL = "xl",
+}
+
+export interface AppleIPhoneProps {
     colorMode?: "light" | "dark";
-    size?: "xs" | "sm" | "md" | "lg" | "xl";
+    size?: Size;
     mode?: "portrait" | "landscape";
     messageHistory?: Message[];
     app?: "messenger";
 }
 
-const IPHONE_HEIGHT = 5.81; // inches
-const IPHONE_WIDTH = 2.81; // inches
-const IPHONE_CORNER_RADIUS = 0.42; // inches
+export interface DeviceDimensions {
+    height: number;
+    width: number;
+    cornerRadius: number;
+    outerPadding: number;
+    innerPadding: number;
+    innerBorderRadius: number;
+}
+
+const IPHONE_DIMENSIONS: DeviceDimensions = {
+    height: 29.05,
+    width: 14.05,
+    cornerRadius: 2.1,
+    outerPadding: 0.075,
+    innerPadding: 0.5,
+    innerBorderRadius: 1.75
+}
 
 const getDimensionsBySize = (
-    size: "xs" | "sm" | "md" | "lg" | "xl",
+    size: Size,
     mode: "portrait" | "landscape"
 ) => {
-    let height = mode === "landscape" ? IPHONE_WIDTH : IPHONE_HEIGHT;
-    let width = mode === "landscape" ? IPHONE_HEIGHT : IPHONE_WIDTH;
-    let outerPadding = 0.015;
-    let innerPadding = 0.100;
-    let innerBorderRadius = 0.35;
+    let height = mode === "landscape" ? IPHONE_DIMENSIONS.width : IPHONE_DIMENSIONS.height;
+    let width = mode === "landscape" ? IPHONE_DIMENSIONS.height : IPHONE_DIMENSIONS.width;
+    let outerPadding = IPHONE_DIMENSIONS.outerPadding;
+    let innerPadding = IPHONE_DIMENSIONS.innerPadding;
+    let innerBorderRadius = IPHONE_DIMENSIONS.innerBorderRadius;
+    let cornerRadius = IPHONE_DIMENSIONS.cornerRadius;
 
     switch (size) {
         case "xs":
             return {
                 height: height / 2,
                 width: width / 2,
-                cornerRadius: IPHONE_CORNER_RADIUS / 2,
+                cornerRadius: cornerRadius / 2,
                 outerPadding: outerPadding / 2,
                 innerPadding: innerPadding / 2,
                 innerBorderRadius: innerBorderRadius / 2,
@@ -41,43 +65,43 @@ const getDimensionsBySize = (
             return {
                 height: height * 0.75,
                 width: width * 0.75,
-                cornerRadius: IPHONE_CORNER_RADIUS * 0.75,
+                cornerRadius: cornerRadius * 0.75,
                 outerPadding: outerPadding * 0.75,
                 innerPadding: innerPadding * 0.75,
                 innerBorderRadius: innerBorderRadius * 0.75,
             };
         case "md":
             return {
-                height: height,
-                width: width,
-                cornerRadius: IPHONE_CORNER_RADIUS,
+                height,
+                width,
+                cornerRadius,
                 outerPadding,
                 innerPadding,
                 innerBorderRadius,
             };
         case "lg":
             return {
-                height: height * 3.25,
-                width: width * 3.25,
-                cornerRadius: IPHONE_CORNER_RADIUS * 3.25,
-                outerPadding: outerPadding * 3.25,
-                innerPadding: innerPadding * 3.25,
-                innerBorderRadius: innerBorderRadius * 3.25,
+                height: height * 1.75,
+                width: width * 1.75,
+                cornerRadius: cornerRadius * 1.75,
+                outerPadding: outerPadding * 1.75,
+                innerPadding: innerPadding * 1.75,
+                innerBorderRadius: innerBorderRadius * 1.75,
             };
         case "xl":
             return {
-                height: height * 5.5,
-                width: width * 5.5,
-                cornerRadius: IPHONE_CORNER_RADIUS * 5.5,
-                outerPadding: outerPadding * 5.5,
-                innerPadding: innerPadding * 5.5,
-                innerBorderRadius: innerBorderRadius * 5.5,
+                height: height * 3,
+                width: width * 3,
+                cornerRadius: cornerRadius * 3,
+                outerPadding: outerPadding * 3,
+                innerPadding: innerPadding * 3,
+                innerBorderRadius: innerBorderRadius * 3,
             };
         default:
             return {
-                height: height,
-                width: width,
-                cornerRadius: IPHONE_CORNER_RADIUS,
+                height,
+                width,
+                cornerRadius,
                 outerPadding,
                 innerPadding,
                 innerBorderRadius,
@@ -87,7 +111,7 @@ const getDimensionsBySize = (
 
 const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     colorMode = "light",
-    size = "md",
+    size = Size.MD,
     mode = "portrait",
     app,
     messageHistory = [],
@@ -105,7 +129,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     const width = defaultWidth;
     const cornerRadius = defaultCornerRadius;
     const outerPadding = defaultOuterPadding;
-    const innterPadding = defaultInnerPadding;
+    const innerPadding = defaultInnerPadding;
     const innerBorderRadius = defaultInnerBorderRadius;
 
     return (
@@ -136,7 +160,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                         borderRadius: `${innerBorderRadius}rem`,
                         backgroundColor: colorMode === "light" ? "#191919" : "#404040",
                         position: "relative",
-                        margin: `${innterPadding}rem`,
+                        margin: `${innerPadding}rem`,
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between",
@@ -147,14 +171,15 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                         <BuiltInMessenger
                             colorMode={colorMode}
                             messageHistory={messageHistory}
+                            size={size}
                         />
                     )}
                     <div
                         style={{
-                            marginTop: "0.5rem",
+                            marginTop: `${innerPadding}rem`,
                             position: "absolute",
                             left: "35%",
-                            height: "1rem",
+                            height: `${innerPadding * 2}rem`,
                             borderRadius: 99999,
                             width: "30%",
                             backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
