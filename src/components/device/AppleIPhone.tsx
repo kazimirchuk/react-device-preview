@@ -6,6 +6,16 @@ export interface Message {
     text: string;
 }
 
+export enum RotationMode {
+    PORTRAIT = "portrait",
+    LANDSCAPE = "landscape",
+}
+
+export enum ColorMode {
+    LIGHT = "light",
+    DARK = "dark",
+}
+
 export enum Size {
     XS = "xs",
     SM = "sm",
@@ -15,9 +25,10 @@ export enum Size {
 }
 
 export interface AppleIPhoneProps {
+    boxShadow?: boolean;
     colorMode?: "light" | "dark";
     size?: "xs" | "sm" | "md" | "lg" | "xl";
-    mode?: "portrait" | "landscape";
+    rotation?: "portrait" | "landscape";
     messageHistory?: Message[];
     app?: "messenger";
 }
@@ -42,10 +53,10 @@ const IPHONE_DIMENSIONS: DeviceDimensions = {
 
 const getDimensionsBySize = (
     size: Size,
-    mode: "portrait" | "landscape"
+    rotation: RotationMode
 ) => {
-    let height = mode === "landscape" ? IPHONE_DIMENSIONS.width : IPHONE_DIMENSIONS.height;
-    let width = mode === "landscape" ? IPHONE_DIMENSIONS.height : IPHONE_DIMENSIONS.width;
+    let height = rotation === RotationMode.LANDSCAPE ? IPHONE_DIMENSIONS.width : IPHONE_DIMENSIONS.height;
+    let width = rotation === RotationMode.LANDSCAPE ? IPHONE_DIMENSIONS.height : IPHONE_DIMENSIONS.width;
     let outerPadding = IPHONE_DIMENSIONS.outerPadding;
     let innerPadding = IPHONE_DIMENSIONS.innerPadding;
     let innerBorderRadius = IPHONE_DIMENSIONS.innerBorderRadius;
@@ -112,7 +123,8 @@ const getDimensionsBySize = (
 const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     colorMode = "light",
     size = "md",
-    mode = "portrait",
+    rotation = "portrait",
+    boxShadow = true,
     app,
     messageHistory = [],
 }) => {
@@ -123,7 +135,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
         outerPadding: defaultOuterPadding,
         innerPadding: defaultInnerPadding,
         innerBorderRadius: defaultInnerBorderRadius,
-    } = getDimensionsBySize(size as Size, mode);
+    } = getDimensionsBySize(size as Size, rotation as RotationMode);
 
     const height = defaultHeight;
     const width = defaultWidth;
@@ -136,12 +148,13 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
         <div
             style={{
                 display: "flex",
+                boxShadow: boxShadow && colorMode === ColorMode.LIGHT ? "0 0 3.5rem 0 rgba(0, 0, 0, 0.5)" : "none",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: `${cornerRadius}rem`,
                 height: `${height}rem`,
                 width: `${width}rem`,
-                backgroundColor: colorMode === "light" ? "#ebebeb" : "white",
+                backgroundColor: colorMode === ColorMode.LIGHT ? "#ebebeb" : "white",
                 padding: `${outerPadding}rem`,
             }}
         >
@@ -150,7 +163,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                     width: "100%",
                     height: "100%",
                     borderRadius: `${cornerRadius}rem`,
-                    backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
+                    backgroundColor: colorMode === ColorMode.LIGHT ? "black" : "#1a1a1a",
                     display: "flex"
                 }}
             >
@@ -158,7 +171,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                     style={{
                         width: "100%",
                         borderRadius: `${innerBorderRadius}rem`,
-                        backgroundColor: colorMode === "light" ? "#191919" : "#404040",
+                        backgroundColor: colorMode === ColorMode.LIGHT ? "#191919" : "#404040",
                         position: "relative",
                         margin: `${innerPadding}rem`,
                         display: "flex",
@@ -169,20 +182,22 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                 >
                     {app === "messenger" && (
                         <BuiltInMessenger
-                            colorMode={colorMode}
+                            colorMode={colorMode as ColorMode}
                             messageHistory={messageHistory}
                             size={size as Size}
+                            rotation={rotation as RotationMode}
                         />
                     )}
                     <div
                         style={{
-                            marginTop: `${innerPadding}rem`,
+                            marginTop: rotation === RotationMode.PORTRAIT ? `${innerPadding}rem` : 0,
                             position: "absolute",
-                            left: "35%",
-                            height: mode === "portrait" ? `${innerPadding * 2}rem` : "30%",
+                            top: rotation === RotationMode.PORTRAIT ? 0 : "35%",
+                            left: rotation === RotationMode.PORTRAIT ? "35%" : `${innerPadding}rem`,
+                            height: rotation === RotationMode.PORTRAIT ? `${innerPadding * 2}rem` : "30%",
                             borderRadius: 99999,
-                            width: mode === "portrait" ? "30%" : `${innerPadding * 2}rem`,
-                            backgroundColor: colorMode === "light" ? "black" : "#1a1a1a",
+                            width: rotation === RotationMode.PORTRAIT ? "30%" : `${innerPadding * 2}rem`,
+                            backgroundColor: colorMode === ColorMode.LIGHT ? "black" : "#1a1a1a",
                         }}
                     />
                 </div>

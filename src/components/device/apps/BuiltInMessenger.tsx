@@ -1,22 +1,24 @@
 import React from "react";
-import { Message, Size } from "../AppleIPhone";
+import { ColorMode, Message, RotationMode, Size } from "../AppleIPhone";
 
 interface BuiltInMessengerProps {
-    colorMode?: "light" | "dark";
+    colorMode?: ColorMode;
     messageHistory: Message[];
+    rotation: RotationMode;
     size: Size;
 }
 
 const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
-    colorMode = "light",
+    colorMode = ColorMode.LIGHT,
+    rotation,
     messageHistory,
     size,
 }) => {
     let messagesGap = 0.5;
     let fontSize = 0.8;
     let messageMaxHeight = 5;
-    let messagePaddingX = 0.25;
-    let messagePaddingY = 0.5;
+    let messagePaddingX = 0.5;
+    let messagePaddingY = 0.25;
     let messageBorderRadius = 1;
 
     switch (size) {
@@ -66,18 +68,21 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
 
     return (
         <>
-            <div
-                style={{
-                    height: "10%",
-                    backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
-                }}
-            />
+            {rotation === RotationMode.PORTRAIT && (
+                <div
+                    style={{
+                        height: "15%",
+                        backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
+                    }}
+                />
+            )}
             <div
                 style={{
                     height: "80%",
                     backgroundColor: colorMode === "light" ? "white" : "black",
                     overflowY: "auto",
                     padding: "1rem",
+                    paddingLeft: rotation === RotationMode.PORTRAIT ? "1rem" : "2rem",
                     display: "flex",
                     flexDirection: "column-reverse",
                     gap: `${messagesGap}rem`,
@@ -117,7 +122,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             </div>
             <div
                 style={{
-                    height: "5%",
+                    height: rotation === RotationMode.PORTRAIT ? "7%" : "10%",
                     backgroundColor: colorMode === "light" ? "white" : "black",
                     paddingBottom: "0.5rem"
                 }}
@@ -126,21 +131,23 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                     style={{
                         height: "80%",
                         width: "90%",
-                        marginLeft: "auto",
                         marginRight: "auto",
                         borderRadius: 99999,
                         borderStyle: "solid",
-                        borderWidth: "0.05rem",
+                        borderWidth: "0.1rem",
                         borderColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
+                        marginLeft: rotation === RotationMode.PORTRAIT ? "auto" : "2rem",
                     }}
                 />
             </div>
-            <div
-                style={{
-                    height: "5%",
-                    backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
-                }}
-            />
+            {rotation === RotationMode.PORTRAIT && (
+                <div
+                    style={{
+                        height: "5%",
+                        backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
+                    }}
+                />
+            )}
         </>
     );
 };
