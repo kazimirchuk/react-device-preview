@@ -1,7 +1,8 @@
 export {
-    default,
+    default as AppleIPhone,
     AppleIPhoneProps,
-    Size,
-    DeviceDimensions,
-    Message,
-} from "./AppleIPhone";
+} from "./devices/AppleIPhone";
+
+export {
+    default as SamsungGalaxy
+} from "./devices/SamsungGalaxy";

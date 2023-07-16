@@ -1,45 +1,13 @@
 import React from "react";
-import BuiltInMessenger from "./apps/BuiltInMessenger";
-
-export interface Message {
-    isOutgoing: boolean;
-    text: string;
-}
-
-export enum RotationMode {
-    PORTRAIT = "portrait",
-    LANDSCAPE = "landscape",
-}
-
-export enum ColorMode {
-    LIGHT = "light",
-    DARK = "dark",
-}
-
-export enum Size {
-    XS = "xs",
-    SM = "sm",
-    MD = "md",
-    LG = "lg",
-    XL = "xl",
-}
+import { AppConfig, getAppComponent } from "../App";
+import { ColorMode, DeviceDimensions, RotationMode, Size, getDimensionsBySize } from "../Device";
 
 export interface AppleIPhoneProps {
     boxShadow?: boolean;
     colorMode?: "light" | "dark";
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     rotation?: "portrait" | "landscape";
-    messageHistory?: Message[];
-    app?: "messenger";
-}
-
-export interface DeviceDimensions {
-    height: number;
-    width: number;
-    cornerRadius: number;
-    outerPadding: number;
-    innerPadding: number;
-    innerBorderRadius: number;
+    app?: AppConfig;
 }
 
 const IPHONE_DIMENSIONS: DeviceDimensions = {
@@ -51,82 +19,12 @@ const IPHONE_DIMENSIONS: DeviceDimensions = {
     innerBorderRadius: 1.75
 }
 
-const getDimensionsBySize = (
-    size: Size,
-    rotation: RotationMode
-) => {
-    let height = rotation === RotationMode.LANDSCAPE ? IPHONE_DIMENSIONS.width : IPHONE_DIMENSIONS.height;
-    let width = rotation === RotationMode.LANDSCAPE ? IPHONE_DIMENSIONS.height : IPHONE_DIMENSIONS.width;
-    let outerPadding = IPHONE_DIMENSIONS.outerPadding;
-    let innerPadding = IPHONE_DIMENSIONS.innerPadding;
-    let innerBorderRadius = IPHONE_DIMENSIONS.innerBorderRadius;
-    let cornerRadius = IPHONE_DIMENSIONS.cornerRadius;
-
-    switch (size) {
-        case "xs":
-            return {
-                height: height / 2,
-                width: width / 2,
-                cornerRadius: cornerRadius / 2,
-                outerPadding: outerPadding / 2,
-                innerPadding: innerPadding / 2,
-                innerBorderRadius: innerBorderRadius / 2,
-            };
-        case "sm":
-            return {
-                height: height * 0.75,
-                width: width * 0.75,
-                cornerRadius: cornerRadius * 0.75,
-                outerPadding: outerPadding * 0.75,
-                innerPadding: innerPadding * 0.75,
-                innerBorderRadius: innerBorderRadius * 0.75,
-            };
-        case "md":
-            return {
-                height,
-                width,
-                cornerRadius,
-                outerPadding,
-                innerPadding,
-                innerBorderRadius,
-            };
-        case "lg":
-            return {
-                height: height * 1.75,
-                width: width * 1.75,
-                cornerRadius: cornerRadius * 1.75,
-                outerPadding: outerPadding * 1.75,
-                innerPadding: innerPadding * 1.75,
-                innerBorderRadius: innerBorderRadius * 1.75,
-            };
-        case "xl":
-            return {
-                height: height * 3,
-                width: width * 3,
-                cornerRadius: cornerRadius * 3,
-                outerPadding: outerPadding * 3,
-                innerPadding: innerPadding * 3,
-                innerBorderRadius: innerBorderRadius * 3,
-            };
-        default:
-            return {
-                height,
-                width,
-                cornerRadius,
-                outerPadding,
-                innerPadding,
-                innerBorderRadius,
-            };
-    }
-}
-
 const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     colorMode = "light",
     size = "md",
     rotation = "portrait",
     boxShadow = true,
     app,
-    messageHistory = [],
 }) => {
     const {
         height: defaultHeight,
@@ -135,7 +33,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
         outerPadding: defaultOuterPadding,
         innerPadding: defaultInnerPadding,
         innerBorderRadius: defaultInnerBorderRadius,
-    } = getDimensionsBySize(size as Size, rotation as RotationMode);
+    } = getDimensionsBySize(size as Size, rotation as RotationMode, IPHONE_DIMENSIONS);
 
     const height = defaultHeight;
     const width = defaultWidth;
@@ -143,6 +41,20 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
     const outerPadding = defaultOuterPadding;
     const innerPadding = defaultInnerPadding;
     const innerBorderRadius = defaultInnerBorderRadius;
+
+    let appComponent = null;
+
+    if (app) {
+        try {
+            appComponent = getAppComponent(app, {
+                colorMode: colorMode as ColorMode,
+                rotation: rotation as RotationMode,
+                size: size as Size,
+            });
+        } catch (e: unknown) {
+            console.error(e);
+        }
+    }
 
     return (
         <div
@@ -180,14 +92,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                         overflow: "hidden",
                     }}
                 >
-                    {app === "messenger" && (
-                        <BuiltInMessenger
-                            colorMode={colorMode as ColorMode}
-                            messageHistory={messageHistory}
-                            size={size as Size}
-                            rotation={rotation as RotationMode}
-                        />
-                    )}
+                    {appComponent}
                     <div
                         style={{
                             marginTop: rotation === RotationMode.PORTRAIT ? `${innerPadding}rem` : 0,

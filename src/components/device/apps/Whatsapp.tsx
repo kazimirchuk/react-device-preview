@@ -7,20 +7,20 @@ export interface Message {
     text: string;
 }
 
-export interface BuiltInMessengerConfig {
-    name: "built_in_messenger";
+export interface WhatsappConfig {
+    name: "whatsapp";
     options: {
         messages: Message[];
     }
 }
 
-interface BuiltInMessengerProps extends AppProps {
-    config: BuiltInMessengerConfig;
+interface WhatsappProps extends AppProps {
+    config: WhatsappConfig;
 }
 
 export const validateConfig = (config: AppConfig): boolean => {
     if (!config) return false;
-    if (config.name !== "BuiltInMessenger") return false;
+    if (config.name !== "Whatsapp") return false;
     if (!config.options) return false;
     if (!config.options.messages) return false;
     if (!Array.isArray(config.options.messages)) return false;
@@ -28,7 +28,7 @@ export const validateConfig = (config: AppConfig): boolean => {
     return true;
 }
 
-const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
+const Whatsapp: React.FC<WhatsappProps> = ({
     device: {
         colorMode = ColorMode.LIGHT,
         rotation,
@@ -123,10 +123,13 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                         <div
                             style={{
                                 backgroundColor: message.isOutgoing
-                                    ? "#007aff"
+                                    ? "#25D366"
                                     : "#e5e5ea",
                                 color: message.isOutgoing ? "#fff" : "#000",
-                                borderRadius: `${messageBorderRadius}rem`,
+                                borderTopLeftRadius: `${messageBorderRadius}rem`,
+                                borderTopRightRadius: `${messageBorderRadius}rem`,
+                                borderBottomRightRadius: message.isOutgoing ? 0 : `${messageBorderRadius}rem`,
+                                borderBottomLeftRadius: message.isOutgoing ? `${messageBorderRadius}rem` : 0,
                                 paddingLeft: `${messagePaddingX}rem`,
                                 paddingRight: `${messagePaddingX}rem`,
                                 paddingTop: `${messagePaddingY}rem`,
@@ -145,8 +148,9 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             <div
                 style={{
                     height: rotation === RotationMode.PORTRAIT ? "7%" : "10%",
-                    backgroundColor: colorMode === "light" ? "white" : "black",
-                    paddingBottom: "0.5rem"
+                    backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
+                    paddingBottom: "0.5rem",
+                    paddingTop: "0.5rem",
                 }}
             >
                 <div
@@ -155,23 +159,13 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                         width: "90%",
                         marginRight: "auto",
                         borderRadius: 99999,
-                        borderStyle: "solid",
-                        borderWidth: "0.1rem",
-                        borderColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
                         marginLeft: rotation === RotationMode.PORTRAIT ? "auto" : "2rem",
+                        backgroundColor: colorMode === "light" ? "#fff" : "#000",
                     }}
                 />
             </div>
-            {rotation === RotationMode.PORTRAIT && (
-                <div
-                    style={{
-                        height: "5%",
-                        backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
-                    }}
-                />
-            )}
         </>
     );
-};
+}
 
-export default BuiltInMessenger;
+export default Whatsapp;
