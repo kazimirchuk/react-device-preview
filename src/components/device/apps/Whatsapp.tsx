@@ -189,7 +189,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
             </div>
             <div
                 style={{
-                    height: rotation === RotationMode.PORTRAIT ? "7%" : "10%",
+                    height: rotation === RotationMode.PORTRAIT ? "7.2%" : "10.4%",
                     backgroundColor: colorMode === "light" ? "#c0c0c0" : "#4e4e4e",
                     paddingBottom: "0.5rem",
                     paddingTop: "0.5rem",

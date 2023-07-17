@@ -67,25 +67,30 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
                 height: `${height}rem`,
                 width: `${width}rem`,
                 backgroundColor: colorMode === ColorMode.LIGHT ? "#ebebeb" : "white",
-                padding: `${outerPadding}rem`,
+                position: "relative"
             }}
         >
             <div
                 style={{
-                    width: "100%",
-                    height: "100%",
+                    width: `calc(100% - ${outerPadding}rem)`,
+                    height: `calc(100% - ${outerPadding}rem)`,
                     borderRadius: `${cornerRadius}rem`,
                     backgroundColor: colorMode === ColorMode.LIGHT ? "black" : "#1a1a1a",
-                    display: "flex"
+                    display: "flex",
+                    position: "absolute",
+                    overflow: "hidden"
                 }}
             >
                 <div
                     style={{
-                        width: "100%",
+                        width: `calc(100% - ${innerPadding * 2}rem)`,
+                        height: `calc(100% - ${innerPadding * 2}rem)`,
+                        alignSelf: "center",
+                        marginLeft: "auto",
+                        marginRight: "auto",
                         borderRadius: `${innerBorderRadius}rem`,
                         backgroundColor: colorMode === ColorMode.LIGHT ? "#191919" : "#404040",
                         position: "relative",
-                        margin: `${innerPadding}rem`,
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-between",

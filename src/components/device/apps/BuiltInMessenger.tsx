@@ -100,7 +100,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             )}
             <div
                 style={{
-                    height: "80%",
+                    height: rotation === RotationMode.PORTRAIT ? "73%" : "70%",
                     backgroundColor: colorMode === "light" ? "white" : "black",
                     overflowY: "auto",
                     padding: "1rem",
@@ -145,7 +145,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
             </div>
             <div
                 style={{
-                    height: rotation === RotationMode.PORTRAIT ? "7%" : "10%",
+                    height: rotation === RotationMode.PORTRAIT ? "7.2%" : "10.4%",
                     backgroundColor: colorMode === "light" ? "white" : "black",
                     paddingBottom: "0.5rem"
                 }}
