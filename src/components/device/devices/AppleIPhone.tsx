@@ -60,7 +60,7 @@ const AppleIPhone: React.FC<AppleIPhoneProps> = ({
         <div
             style={{
                 display: "flex",
-                boxShadow: boxShadow && colorMode === ColorMode.LIGHT ? "0 0 3.5rem 0 rgba(0, 0, 0, 0.5)" : "none",
+                boxShadow: boxShadow && colorMode === ColorMode.LIGHT ? "0 0 1.5rem 0 rgba(0, 0, 0, 0.5)" : "none",
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: `${cornerRadius}rem`,

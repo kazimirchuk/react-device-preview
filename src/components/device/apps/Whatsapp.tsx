@@ -122,66 +122,68 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                 : "flex-start",
                         }}
                     >
-                        <div
-                            style={{
-                                backgroundColor: message.isOutgoing
-                                    ? "#25D366"
-                                    : "#e5e5ea",
-                                color: message.isOutgoing ? "#fff" : "#000",
-                                borderTopLeftRadius: `${messageBorderRadius}rem`,
-                                borderTopRightRadius: `${messageBorderRadius}rem`,
-                                borderBottomRightRadius: message.isOutgoing ? 0 : `${messageBorderRadius}rem`,
-                                borderBottomLeftRadius: message.isOutgoing ? `${messageBorderRadius}rem` : 0,
-                                paddingLeft: `${messagePaddingX}rem`,
-                                paddingRight: `${messagePaddingX}rem`,
-                                paddingTop: `${messagePaddingY}rem`,
-                                paddingBottom: `${messagePaddingY}rem`,
-                                maxWidth: "75%",
-                                fontSize: `${fontSize}rem`,
-                                overflowY: "auto",
-                            }}
-                        >
-                            {!!message.mediaUrl && message.mediaType === "image" && (
-                                <img
-                                    src={message.mediaUrl}
-                                    style={{
-                                        maxWidth: "100%",
-                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
-                                    }}
-                                />
-                            )}
-                            {!!message.mediaUrl && message.mediaType === "video" && (
-                                <video
-                                    src={message.mediaUrl}
-                                    controls
-                                    style={{
-                                        maxWidth: "100%",
-                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
-                                    }}
-                                />
-                            )}
-                            {!!message.mediaUrl && message.mediaType === "audio" && (
-                                <audio
-                                    src={message.mediaUrl}
-                                    controls
-                                    style={{
-                                        maxWidth: "100%",
-                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
-                                    }}
-                                />
-                            )}
-                            {!!message.mediaUrl && message.mediaType === "pdf" && (
-                                <a
-                                    href={message.mediaUrl}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    download={true}
-                                >
-                                    PDF attachment
-                                </a>
-                            )}
-                            {message.text}
-                        </div>
+                        {message.text || message.mediaUrl ? (
+                            <div
+                                style={{
+                                    backgroundColor: message.isOutgoing
+                                        ? "#25D366"
+                                        : "#e5e5ea",
+                                    color: message.isOutgoing ? "#fff" : "#000",
+                                    borderTopLeftRadius: `${messageBorderRadius}rem`,
+                                    borderTopRightRadius: `${messageBorderRadius}rem`,
+                                    borderBottomRightRadius: message.isOutgoing ? 0 : `${messageBorderRadius}rem`,
+                                    borderBottomLeftRadius: message.isOutgoing ? `${messageBorderRadius}rem` : 0,
+                                    paddingLeft: `${messagePaddingX}rem`,
+                                    paddingRight: `${messagePaddingX}rem`,
+                                    paddingTop: `${messagePaddingY}rem`,
+                                    paddingBottom: `${messagePaddingY}rem`,
+                                    maxWidth: "75%",
+                                    fontSize: `${fontSize}rem`,
+                                    overflowY: "auto",
+                                }}
+                            >
+                                {!!message.mediaUrl && message.mediaType === "image" && (
+                                    <img
+                                        src={message.mediaUrl}
+                                        style={{
+                                            maxWidth: "100%",
+                                            borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                        }}
+                                    />
+                                )}
+                                {!!message.mediaUrl && message.mediaType === "video" && (
+                                    <video
+                                        src={message.mediaUrl}
+                                        controls
+                                        style={{
+                                            maxWidth: "100%",
+                                            borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                        }}
+                                    />
+                                )}
+                                {!!message.mediaUrl && message.mediaType === "audio" && (
+                                    <audio
+                                        src={message.mediaUrl}
+                                        controls
+                                        style={{
+                                            maxWidth: "100%",
+                                            borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                        }}
+                                    />
+                                )}
+                                {!!message.mediaUrl && message.mediaType === "pdf" && (
+                                    <a
+                                        href={message.mediaUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        download={true}
+                                    >
+                                        PDF attachment
+                                    </a>
+                                )}
+                                {message.text}
+                            </div>
+                        ) : null}
                     </div>
                 ))}
             </div>

@@ -1,7 +1,7 @@
 {
   "name": "@kazimirchuk/react-device-preview",
   "author": "Oleksandr Kazimirchuk",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "license": "MIT",
   "scripts": {
     "rollup": "rollup -c"

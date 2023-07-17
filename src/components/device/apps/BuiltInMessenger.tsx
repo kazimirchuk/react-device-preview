@@ -120,24 +120,26 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                 : "flex-start",
                         }}
                     >
-                        <div
-                            style={{
-                                backgroundColor: message.isOutgoing
-                                    ? "#007aff"
-                                    : "#e5e5ea",
-                                color: message.isOutgoing ? "#fff" : "#000",
-                                borderRadius: `${messageBorderRadius}rem`,
-                                paddingLeft: `${messagePaddingX}rem`,
-                                paddingRight: `${messagePaddingX}rem`,
-                                paddingTop: `${messagePaddingY}rem`,
-                                paddingBottom: `${messagePaddingY}rem`,
-                                maxWidth: "75%",
-                                fontSize: `${fontSize}rem`,
-                                overflowY: "auto",
-                            }}
-                        >
-                            {message.text}
-                        </div>
+                        {message.text ? (
+                            <div
+                                style={{
+                                    backgroundColor: message.isOutgoing
+                                        ? "#007aff"
+                                        : "#e5e5ea",
+                                    color: message.isOutgoing ? "#fff" : "#000",
+                                    borderRadius: `${messageBorderRadius}rem`,
+                                    paddingLeft: `${messagePaddingX}rem`,
+                                    paddingRight: `${messagePaddingX}rem`,
+                                    paddingTop: `${messagePaddingY}rem`,
+                                    paddingBottom: `${messagePaddingY}rem`,
+                                    maxWidth: "75%",
+                                    fontSize: `${fontSize}rem`,
+                                    overflowY: "auto",
+                                }}
+                            >
+                                {message.text}
+                            </div>
+                        ) : null}
                     </div>
                 ))}
             </div>
