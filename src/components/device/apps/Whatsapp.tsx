@@ -4,6 +4,8 @@ import { ColorMode, RotationMode, Size } from "../Device";
 
 export interface Message {
     isOutgoing: boolean;
+    mediaUrl?: string;
+    mediaType?: "image" | "video" | "audio" | "pdf";
     text: string;
 }
 
@@ -136,10 +138,48 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                 paddingBottom: `${messagePaddingY}rem`,
                                 maxWidth: "75%",
                                 fontSize: `${fontSize}rem`,
-                                maxHeight: `${messageMaxHeight}rem`,
                                 overflowY: "auto",
                             }}
                         >
+                            {!!message.mediaUrl && message.mediaType === "image" && (
+                                <img
+                                    src={message.mediaUrl}
+                                    style={{
+                                        maxWidth: "100%",
+                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                    }}
+                                />
+                            )}
+                            {!!message.mediaUrl && message.mediaType === "video" && (
+                                <video
+                                    src={message.mediaUrl}
+                                    controls
+                                    style={{
+                                        maxWidth: "100%",
+                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                    }}
+                                />
+                            )}
+                            {!!message.mediaUrl && message.mediaType === "audio" && (
+                                <audio
+                                    src={message.mediaUrl}
+                                    controls
+                                    style={{
+                                        maxWidth: "100%",
+                                        borderRadius: `${messageBorderRadius * 0.8}rem`,
+                                    }}
+                                />
+                            )}
+                            {!!message.mediaUrl && message.mediaType === "pdf" && (
+                                <a
+                                    href={message.mediaUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    download={true}
+                                >
+                                    PDF attachment
+                                </a>
+                            )}
                             {message.text}
                         </div>
                     </div>

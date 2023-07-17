@@ -133,7 +133,6 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                 paddingBottom: `${messagePaddingY}rem`,
                                 maxWidth: "75%",
                                 fontSize: `${fontSize}rem`,
-                                maxHeight: `${messageMaxHeight}rem`,
                                 overflowY: "auto",
                             }}
                         >
