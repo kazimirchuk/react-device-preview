@@ -5,7 +5,7 @@ import { ColorMode, RotationMode, Size } from "../Device";
 export interface Message {
     isOutgoing: boolean;
     mediaUrl?: string;
-    mediaType?: "image" | "video" | "audio" | "pdf";
+    mediaType?: string;
     text: string;
 }
 
@@ -102,7 +102,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
             )}
             <div
                 style={{
-                    height: "80%",
+                    height: rotation === RotationMode.PORTRAIT ? "78%" : "75%",
                     backgroundColor: colorMode === "light" ? "white" : "black",
                     overflowY: "auto",
                     padding: "1rem",
@@ -142,7 +142,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                     overflowY: "auto",
                                 }}
                             >
-                                {!!message.mediaUrl && message.mediaType === "image" && (
+                                {!!message.mediaUrl && message.mediaType?.includes("image") && (
                                     <img
                                         src={message.mediaUrl}
                                         style={{
@@ -151,7 +151,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                         }}
                                     />
                                 )}
-                                {!!message.mediaUrl && message.mediaType === "video" && (
+                                {!!message.mediaUrl && message.mediaType?.includes("video") && (
                                     <video
                                         src={message.mediaUrl}
                                         controls
@@ -161,7 +161,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                         }}
                                     />
                                 )}
-                                {!!message.mediaUrl && message.mediaType === "audio" && (
+                                {!!message.mediaUrl && message.mediaType?.includes("audio") && (
                                     <audio
                                         src={message.mediaUrl}
                                         controls
@@ -171,7 +171,7 @@ const Whatsapp: React.FC<WhatsappProps> = ({
                                         }}
                                     />
                                 )}
-                                {!!message.mediaUrl && message.mediaType === "pdf" && (
+                                {!!message.mediaUrl && message.mediaType?.includes("pdf") && (
                                     <a
                                         href={message.mediaUrl}
                                         target="_blank"
