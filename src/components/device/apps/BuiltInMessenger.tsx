@@ -4,7 +4,10 @@ import { ColorMode, RotationMode, Size } from "../Device";
 
 export interface Message {
     isOutgoing: boolean;
-    text: string;
+    mediaUrl?: string;
+    mediaType?: string;
+    media?: File | Blob;
+    text?: string;
 }
 
 export interface BuiltInMessengerConfig {
@@ -26,6 +29,65 @@ export const validateConfig = (config: AppConfig): boolean => {
     if (!Array.isArray(config.options.messages)) return false;
 
     return true;
+}
+
+const renderMediaIfPossible = (url?: string, file?: File | Blob, type?: string, borderRadius?: string) => {
+    if (!url || !type) {
+        return null;
+    }
+
+    if (type.includes("image")) {
+        return (
+            <img
+                src={url || URL.createObjectURL(file!)}
+                style={{
+                    maxWidth: "100%",
+                    borderRadius,
+                }}
+            />
+        );
+    }
+
+    if (type.includes("video")) {
+        return (
+            <video
+                src={url || URL.createObjectURL(file!)}
+                controls
+                style={{
+                    maxWidth: "100%",
+                    borderRadius,
+                }}
+            />
+        );
+    }
+
+    if (type.includes("audio")) {
+        return (
+            <audio
+                src={url || URL.createObjectURL(file!)}
+                controls
+                style={{
+                    maxWidth: "100%",
+                    borderRadius,
+                }}
+            />
+        );
+    }
+
+    if (type.includes("pdf")) {
+        return (
+            <a
+                href={url || URL.createObjectURL(file!)}
+                target="_blank"
+                rel="noreferrer"
+                download={true}
+            >
+                PDF attachment
+            </a>
+        );
+    }
+
+    return null;
 }
 
 const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
@@ -120,7 +182,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                 : "flex-start",
                         }}
                     >
-                        {message.text ? (
+                        {message.text || message.media || message.mediaUrl ? (
                             <div
                                 style={{
                                     backgroundColor: message.isOutgoing
@@ -137,7 +199,8 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                     overflowY: "auto",
                                 }}
                             >
-                                {message.text}
+                                {renderMediaIfPossible(message.mediaUrl, message.media, message.mediaType, `${messageBorderRadius * 0.8}rem`)}
+                                {!message.mediaUrl && !message.media && message.text && message.text}
                             </div>
                         ) : null}
                     </div>
