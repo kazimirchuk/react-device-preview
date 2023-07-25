@@ -32,7 +32,11 @@ export const validateConfig = (config: AppConfig): boolean => {
 }
 
 const renderMediaIfPossible = (url?: string, file?: File | Blob, type?: string, borderRadius?: string) => {
-    if (!url || !type) {
+    if (!url && !file) {
+        return null;
+    }
+
+    if (!type) {
         return null;
     }
 
@@ -200,7 +204,7 @@ const BuiltInMessenger: React.FC<BuiltInMessengerProps> = ({
                                 }}
                             >
                                 {renderMediaIfPossible(message.mediaUrl, message.media, message.mediaType, `${messageBorderRadius * 0.8}rem`)}
-                                {!message.mediaUrl && !message.media && message.text && message.text}
+                                {!message.mediaUrl && !message.media && message.text}
                             </div>
                         ) : null}
                     </div>
